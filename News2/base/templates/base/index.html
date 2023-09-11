@@ -1,11 +1,13 @@
 {% extends 'main.html' %}
 {% block content %}
     <div class="left-index">
-        <h2>Topics</h2>
-        <a href="{% url 'home' %}">All</a>
-        {% for topic in topics %}
-        <a href="{% url 'home'%}?q={{topic.name}} ">{{topic}}</a>
-        {% endfor %}
+        <div class="topic-container">
+            <h2>Topics</h2>
+            <a href="{% url 'home' %}" class="topic">All</a>
+            {% for topic in topics %}
+            <a href="{% url 'home'%}?q={{topic.name}}" class="topic">{{topic}}</a>
+            {% endfor %}
+        </div>
     </div>
     <div class="main-index">
         {% for i in news %}

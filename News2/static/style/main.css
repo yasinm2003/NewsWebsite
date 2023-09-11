@@ -50,6 +50,35 @@ header{
     background-color: white;
     border-radius: 50px;
 }
+.left-index{
+    height: fit-content;
+    background-color: #b20600;
+    margin: 20px 0;
+    border-radius: 20px;
+}
+.topic-container{
+    display: grid;
+    grid-template-columns: 1fr;
+    background-color: #eeeeee;
+    margin: 10px;
+    border-radius: 10px;
+}
+.topic-container h2{
+    margin: 10px;
+    text-align: center;
+    background-color: #eeeeee;
+    color: #00092c;
+    border-radius: 10px;
+    padding: 20px;
+}
+.topic{
+    margin: 10px;
+    text-align: center;
+    background-color: #eeeeee;
+    color: #00092c;
+    border-radius: 10px;
+    padding: 10px;
+}
 .news-container{
     display: grid;
     grid-template-rows: 3fr 1fr;

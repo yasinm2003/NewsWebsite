@@ -1,0 +1,31 @@
+{% extends 'main.html' %}
+{% block content %}
+    <div class="left-index">
+        <h2>Topics</h2>
+        <a href="{% url 'home' %}">All</a>
+        {% for topic in topics %}
+        <a href="{% url 'home'%}?q={{topic.name}} ">{{topic}}</a>
+        {% endfor %}
+    </div>
+    <div class="main-index">
+        {% for i in news %}
+        <div class="news-container">
+            <div class="news-main">
+                <img src="{{i.picture.url}}">
+                <p>{{i.content}}</p>
+            </div>
+            <div class="news-infos">
+                <p>{{i.topic}}</p>
+                <p>Publish time: {{i.created}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="right-index">
+        {% if request.user.username == "owner" %}
+            <p>add news</p>
+        {% else %}
+            <p>tops</p>
+        {% endif %}
+    </div>
+{% endblock content %}

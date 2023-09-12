@@ -1,4 +1,25 @@
 {% extends 'main.html' %}
 {% block content %}
-    <h1>its login rigester page</h1>
+{% if page == 'login' %}
+    <div></div>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <div class="login-container">
+            <div class="login-content">
+                <h2>Login your account</h2>
+                <div class="username-container">
+                    <label>Username: </label>
+                    <input name="username" type="text" placeholder="Enter your username">
+                </div>
+                <div class="password-container">
+                    <label>Password: </label>
+                    <input name="password" type="password" placeholder="Enter your password">
+                </div>
+                <button type="submit">Login</button>
+                <a href="{% url 'register' %}" class="create-account">Dont have account?</a>
+            </div>
+        </div>
+    </form>
+    <div></div>
+{% endif %}
 {% endblock content %}

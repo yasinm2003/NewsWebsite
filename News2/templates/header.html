@@ -5,6 +5,13 @@
             <img src="{% static 'image/news-logo.jpg' %}" class="logo">
         </a>
     </div>
+    <div class="messages">
+        {% if messages %}
+            {% for message in messages %}
+                <p>!!! {{message}} !!!</p>
+            {% endfor %}
+        {% endif %}
+    </div>
     <div class="main-header">
         <form method="GET" action="{% url 'home' %}">
             {% csrf_token %}

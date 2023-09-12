@@ -21,5 +21,19 @@
         </div>
     </form>
     <div></div>
+{%else%}
+<div></div>
+<form method="POST" action="">
+    {% csrf_token %}
+    <div class="login-container">
+        <div class="login-content">
+            <h2>Create your account</h2>
+            {{form}}
+            <button type="submit">Create account</button>
+            <a href="{% url 'login' %}" class="create-account">Do you have account?</a>
+        </div>
+    </div>
+</form>
+<div></div>
 {% endif %}
 {% endblock content %}

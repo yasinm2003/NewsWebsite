@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Topic, News, Comment
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.db.models import Q
 
@@ -40,8 +41,18 @@ def LogoutUage(request):
     return redirect('home')
 
 def RegisterPage(request):
-    page = 'register'
-    context = {}
+    form = UserCreationForm()
+    context = {'form':form}
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'Try again')
     return render(request, 'base/loginregister.html', context)
 
 def FavoritePage(request, pk):

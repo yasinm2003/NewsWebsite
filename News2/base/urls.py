@@ -8,4 +8,5 @@ urlpatterns = [
     path('register/', views.RegisterPage, name="register"),
     path('favorite/<str:pk>/', views.FavoritePage, name="favorite"),
     path('createnews/', views.createnewsPage, name="createnews"),
+    path('news/<str:pk>/',views.NewsPage, name="news"),
 ]

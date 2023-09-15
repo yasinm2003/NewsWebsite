@@ -8,8 +8,8 @@
             <div class="login-content">
                 <h2>Login your account</h2>
                 <div class="username-container">
-                    <label>Username: </label>
-                    <input name="username" type="text" placeholder="Enter your username">
+                    <label>Email: </label>
+                    <input name="username" type="text" placeholder="Enter your email">
                 </div>
                 <div class="password-container">
                     <label>Password: </label>
@@ -23,12 +23,17 @@
     <div></div>
 {%else%}
 <div></div>
-<form method="POST" action="">
+<form method="POST" action="" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="login-container">
         <div class="login-content">
             <h2>Create your account</h2>
-            {{form}}
+            {% for field in form %}
+            <div class="field-container">
+                <label>{{field.label}}: </label>
+                {{field}}
+            </div>
+            {% endfor %}
             <button type="submit">Create account</button>
             <a href="{% url 'login' %}" class="create-account">Do you have account?</a>
         </div>

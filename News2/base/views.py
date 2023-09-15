@@ -1,19 +1,25 @@
 from django.shortcuts import render, redirect
-from .models import Topic, News, Comment
+from .models import Topic, News, Comment, User
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from .form import UserForm
 from django.db.models import Q
 
 def HomePage(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
+    if request.user.is_authenticated:
+        user = request.user.favorite if request.user.favorite != None else ''
+        favorite = News.objects.filter(
+        Q(topic__name__icontains=user)
+    )
+    else:
+        favorite = None
     topics = Topic.objects.all()
     news = News.objects.filter(
         Q(topic__name__icontains=q) |
         Q(content__icontains=q)
     )
-    context = {'topics':topics, 'news': news}
+    context = {'topics':topics, 'news': news, 'favorite':favorite}
     return render(request, 'base/index.html', context)
 
 def LoginPage(request):
@@ -41,10 +47,10 @@ def LogoutUage(request):
     return redirect('home')
 
 def RegisterPage(request):
-    form = UserCreationForm()
+    form = UserForm()
     context = {'form':form}
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = UserForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.username.lower()
@@ -68,3 +74,7 @@ def createnewsPage(request):
     context = {}
     return render(request, 'base/createnews.html', context)
 
+def NewsPage(request, pk):
+    news = News.objects.get(id=pk)
+    context = {'news':news}
+    return render(request, 'base/news.html', context)

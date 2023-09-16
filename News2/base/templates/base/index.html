@@ -18,6 +18,7 @@
             </div>
             <div class="news-infos">
                 <a href="{% url 'home' %}?q={{i.topic.name}}">{{i.topic}}</a>
+                <p>{{i.like}} likes</p>
             </div>
         </div>
         {% endfor %}

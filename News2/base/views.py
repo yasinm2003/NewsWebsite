@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from .form import UserForm
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 def HomePage(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
@@ -30,7 +31,7 @@ def LoginPage(request):
         username = request.POST.get('username').lower()
         password = request.POST.get('password')
         try:
-            user = User.objects.get(username=username)
+            user = User.objects.get(email=username)
         except:
             message = messages.error(request, "This username dose not exist")
         user = authenticate(request, username=username, password=password)
@@ -74,7 +75,14 @@ def createnewsPage(request):
     context = {}
     return render(request, 'base/createnews.html', context)
 
+@login_required(login_url='login')
 def NewsPage(request, pk):
     news = News.objects.get(id=pk)
-    context = {'news':news}
+    if request.method == 'POST':
+        news.like += 1
+        news.save()
+        liked = True
+    else:
+        liked = False
+    context = {'news':news, 'liked':liked}
     return render(request, 'base/news.html', context)
